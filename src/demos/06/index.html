@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>FOUR: Adding State to Components</title>
+	<title>SIX: Multiple Child Components</title>
 	<link rel="stylesheet" type="text/css" href="../../css/main.css">
 	<script src="https://npmcdn.com/react@15.3.0/dist/react.min.js"></script>
 	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.min.js"></script>
@@ -12,6 +12,7 @@
 	<div id="container"></div>
 
 	<script type="text/babel">
+
 	var Comment = React.createClass({
 		getInitialState: function () {
 			return {editing: false}
@@ -23,6 +24,8 @@
 			console.log('removing comment');
 		},
 		save: function () {
+			var val = this.refs.newText.value;
+			console.log("new comment: " + val);
 			this.setState({editing: false});
 		},
 		
@@ -38,7 +41,7 @@
 		renderForm: function () {
 			return (
 				<div className="commentContainer">
-				<textarea defaultValue={this.props.children}></textarea>
+				<textarea ref="newText" defaultValue={this.props.children}></textarea>
 					<button onClick={this.edit} className="button-primary">Edit</button>
 					<button onClick={this.save} className="button-success">Save</button>
 				</div>
@@ -55,13 +58,33 @@
 		}
 	});
 
-	ReactDOM.render(
-		<div className="board">
-			<Comment>Hey my name is Bucky</Comment>
-			<Comment>Beans</Comment>
-			<Comment>Tuna</Comment>
-		</div>
-		, document.getElementById('container'));
+	var Board = React.createClass({
+
+		getInitialState: function(){
+			return {
+				comments: [
+					'I like bacon',
+					'Want to get Ice Cream?',
+					'Ok we have enough comments now'
+				]
+			}
+		},
+
+		render: function(){
+			return (
+				<div className="board">
+					{
+						this.state.comments.map(function(text, i){
+							return(<Comment key={i}>{text}</Comment>);
+						})
+					}
+				</div>
+			)
+		}
+
+	});
+
+	ReactDOM.render(<Board />, document.getElementById('container'));
 	</script>
 </body>
 </html>
