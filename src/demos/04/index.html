@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FOUR</title>
+	<link rel="stylesheet" type="text/css" href="../../css/main.css">
+	<script src="https://npmcdn.com/react@15.3.0/dist/react.min.js"></script>
+	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+	
+</head>
+<body>
+	<div id="container"></div>
+
+	<script type="text/babel">
+	var Comment = React.createClass({
+		getInitialState: function () {
+			return {editing: false}
+		},
+		edit: function () {
+			this.setState({editing: true});
+		},
+		remove: function () {
+			console.log('removing comment');
+		},
+		save: function () {
+			this.setState({editing: false});
+		},
+		
+		renderNormal: function () {
+			return (
+				<div className="commentContainer">
+					<div className="commentText">{this.props.children}</div>
+					<button onClick={this.edit} className="button-primary">Edit</button>
+					<button onClick={this.remove} className="button-danger">Remove</button>
+				</div>
+			);
+		},
+		renderForm: function () {
+			return (
+				<div className="commentContainer">
+				<textarea defaultValue={this.props.children}></textarea>
+					<button onClick={this.edit} className="button-primary">Edit</button>
+					<button onClick={this.save} className="button-success">Save</button>
+				</div>
+			);
+		},
+
+		render: function () {
+			if(this.state.editing){
+				return this.renderForm();
+			}else{
+				return this.renderNormal();
+			}
+			
+		}
+	});
+
+	ReactDOM.render(
+		<div className="board">
+			<Comment>Hey my name is Bucky</Comment>
+			<Comment>Beans</Comment>
+			<Comment>Tuna</Comment>
+		</div>
+		, document.getElementById('container'));
+	</script>
+</body>
+</html>
