@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>SIX: Multiple Child Components</title>
+	<title>SEVEN</title>
 	<link rel="stylesheet" type="text/css" href="../../css/main.css">
 	<script src="https://npmcdn.com/react@15.3.0/dist/react.min.js"></script>
 	<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.min.js"></script>
@@ -70,6 +70,11 @@
 				]
 			}
 		},
+    add: function(text){
+      var arr = this.state.comments;
+      arr.push(text);
+      this.setState({comments: arr})
+    },
 
 		removeComment: function(i){
 			console.log('Removing comment:' + i);
@@ -96,6 +101,7 @@
 		render: function(){
 			return (
 				<div className="board">
+          <button onClick={this.add.bind(null, 'bacon tuna')} className="button-info create">Add New</button>
 					{this.state.comments.map(this.eachComment)}
 				</div>
 			);
